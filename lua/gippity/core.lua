@@ -24,6 +24,14 @@ local function get_node_text(node, bufnr)
   return table.concat(lines, "\n")
 end
 
+local function extract_identifiers(text)
+  local ids = {}
+  for id in text:gmatch("%f[%w_][%a_][%w_]*%f[^%w_]") do
+    ids[id] = true
+  end
+  return ids
+end
+
 function M.collect_context()
   local bufnr = vim.api.nvim_get_current_buf()
   local adapter = get_adapter()
